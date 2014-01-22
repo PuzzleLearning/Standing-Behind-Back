@@ -9,6 +9,7 @@
 	<parameter name="secret_choice" displayName="Choice is confidental"
 		type="java.lang.Boolean" defaultValue="true" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
+	<parameter name="grid_only" displayName="Avoid continuus space"
+		type="java.lang.Boolean" defaultValue="false" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 </parameters>
-
-
