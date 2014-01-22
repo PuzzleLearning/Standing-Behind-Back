@@ -57,11 +57,13 @@ public class MeetingsBuilder implements ContextBuilder<Object> {
 
 		for (Object at : context.getObjects(Attendee.class)) {
 			int i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
-			while (!attendeesList.get(i).hasBeenChosen()) {
-				Attendee atx = attendeesList.get(i);
-				((Attendee)at).setChosen(atx);
-				atx.setHasBeenChosen(true);
+			while (attendeesList.get(i).hasBeenChosen()) {
+				i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
 			}
+			Attendee atx = attendeesList.get(i);
+			((Attendee)at).setChosen(atx);
+			atx.setHasBeenChosen(true);
+			attendeesList.remove(i);
 		}
 
 		for (Object obj : context) {

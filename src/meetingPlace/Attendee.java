@@ -30,6 +30,7 @@ public class Attendee {
 		this.space = space;
 		this.grid = grid;
 		this.name = name;
+		hasBeenChosen = false;
 	}
 	
 	
@@ -38,23 +39,26 @@ public class Attendee {
 		GridCellNgh<Attendee> nghCreator = new GridCellNgh<Attendee>(
 				grid, myLocation(), Attendee.class, 1, 1);
 		List<GridCell<Attendee>> gridCells = nghCreator.getNeighborhood(true);
-		//SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
+		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		
-		moveTowards(directionTowardsChosenOne(gridCells));
+		//moveTowards(directionTowardsChosenOne(gridCells));
+		assert chosen != null;
+		assert space != null;
+		NdPoint nx = space.getLocation(chosen);
+		moveTowards(nx);
 		//infect();
 	}
 	
-	public void moveTowards(GridPoint pt) {
-		if(!pt.equals(myLocation())) {
+	public void moveTowards(NdPoint nx) {
+		//if(!pt.equals(myLocation())) {
 			NdPoint myPoint  = space.getLocation(this);
-			NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+			NdPoint otherPoint = nx;
 			double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
 			space.moveByVector(this, 1, angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
-			
 			moved = true;
-		}
+		//}
 	}
 	
 //	public void infect() {
