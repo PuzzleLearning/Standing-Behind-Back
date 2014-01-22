@@ -34,7 +34,7 @@ public class Attendee {
 	}
 	
 	
-	@ScheduledMethod(start = 1, interval = 1)
+	@ScheduledMethod(start = 1, interval = 1000)
 	public void step() {
 		GridCellNgh<Attendee> nghCreator = new GridCellNgh<Attendee>(
 				grid, myLocation(), Attendee.class, 1, 1);
@@ -46,7 +46,13 @@ public class Attendee {
 		assert space != null;
 		NdPoint nx = space.getLocation(chosen);
 		moveTowards(nx);
-		//infect();
+		drawEdges();
+	}
+	
+	private void drawEdges(){
+		Context<Object> context = ContextUtils.getContext(this);
+		Network<Object> net = (Network<Object>)context.getProjection("meetingNetwork");
+		net.addEdge(this, chosen);
 	}
 	
 	public void moveTowards(NdPoint nx) {

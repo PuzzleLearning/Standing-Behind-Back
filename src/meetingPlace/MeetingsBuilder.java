@@ -55,16 +55,7 @@ public class MeetingsBuilder implements ContextBuilder<Object> {
 			attendeesList.add(att);
 		}
 
-		for (Object at : context.getObjects(Attendee.class)) {
-			int i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
-			while (attendeesList.get(i).hasBeenChosen()) {
-				i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
-			}
-			Attendee atx = attendeesList.get(i);
-			((Attendee)at).setChosen(atx);
-			atx.setHasBeenChosen(true);
-			attendeesList.remove(i);
-		}
+		randomizeChosenAgents(context, params);
 
 		for (Object obj : context) {
 			NdPoint pt = space.getLocation(obj);
@@ -72,5 +63,28 @@ public class MeetingsBuilder implements ContextBuilder<Object> {
 		}
 
 		return context;
+	}
+
+	private void randomizeChosenAgents(Context<Object> context,
+			Parameters params) {
+		if ((Boolean) params.getValue("secret_choice")) {
+			for (Object at : context.getObjects(Attendee.class)) {
+				int i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
+				Attendee atx = attendeesList.get(i);
+				((Attendee) at).setChosen(atx);
+				atx.setHasBeenChosen(true);
+			}
+		} else {
+			for (Object at : context.getObjects(Attendee.class)) {
+				int i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
+				while (attendeesList.get(i).hasBeenChosen()) {
+					i = RandomHelper.nextIntFromTo(0, attendeesList.size() - 1);
+				}
+				Attendee atx = attendeesList.get(i);
+				((Attendee) at).setChosen(atx);
+				atx.setHasBeenChosen(true);
+				attendeesList.remove(i);
+			}
+		}
 	}
 }

@@ -5,4 +5,5 @@
 *.war
 *.ear
 
-velocity.log
+/velocity.log
+/debug.log
