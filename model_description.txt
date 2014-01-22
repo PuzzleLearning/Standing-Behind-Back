@@ -1,1 +1,1 @@
-This is the jzombie model. Please contact the developers for more information.
+This is the meetingPlace model. Please contact the developers for more information.

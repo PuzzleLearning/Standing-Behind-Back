@@ -1,1 +1,1 @@
-The jzombie model is licensed as provided for by the authors. Please contact them for details.
+The meetingPlace model is licensed as provided for by the authors. Please contact them for details.
